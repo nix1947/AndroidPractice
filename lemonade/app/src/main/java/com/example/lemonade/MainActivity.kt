@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
@@ -18,6 +20,7 @@ import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarColors
@@ -31,6 +34,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -153,8 +157,10 @@ fun ImageAndText(
     ) {
 
         Button(
-            colors = ButtonDefaults.buttonColors(containerColor = Color.White),
+            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondary),
             onClick = treeImageClickHandler,
+            shape= RoundedCornerShape(40.dp),
+            modifier = Modifier.size(200.dp)
 
             ) {
             Image(
@@ -162,7 +168,8 @@ fun ImageAndText(
                 contentDescription = stringResource(id = imageContentDescriptionResourceId),
                 modifier = Modifier
                     .padding(20.dp)
-                    .scale(1.4f),
+
+
             )
         }
 
@@ -172,6 +179,7 @@ fun ImageAndText(
         Text(
             text = stringResource(id = textResourceId),
             fontWeight = FontWeight.Bold,
+
 
             )
 
