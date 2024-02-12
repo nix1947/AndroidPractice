@@ -9,6 +9,7 @@ import androidx.compose.runtime.setValue
 import androidx.activity.compose.setContent
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.annotation.VisibleForTesting
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -69,12 +70,12 @@ class MainActivity : ComponentActivity() {
 fun TipApp() {
 
     var tipInput by remember { mutableStateOf("") }
-    var amountInput by remember {  mutableStateOf("")}
+    var amountInput by remember { mutableStateOf("") }
     var isRoundInput by remember { mutableStateOf(false) }
 
     var amount = amountInput.toDoubleOrNull() ?: 0.0
-    var tipPerctange = tipInput.toDoubleOrNull()?: 0.0
-    var tip = calculateTip(amount=amount, tipPerctange=tipPerctange, isRoundInput)
+    var tipPerctange = tipInput.toDoubleOrNull() ?: 0.0
+    var tip = calculateTip(amount = amount, tipPerctange = tipPerctange, isRoundInput)
 
 
 
@@ -86,17 +87,18 @@ fun TipApp() {
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
             .statusBarsPadding()
-            .padding(all=40.dp)
+            .padding(all = 40.dp)
             .verticalScroll(rememberScrollState())
             .safeDrawingPadding(),
     ) {
-        Text(text = stringResource(R.string.calculate_tip),
-            modifier=Modifier.align(alignment=Alignment.Start)
-            )
-        Spacer(modifier=Modifier.height(20.dp))
+        Text(
+            text = stringResource(R.string.calculate_tip),
+            modifier = Modifier.align(alignment = Alignment.Start)
+        )
+        Spacer(modifier = Modifier.height(20.dp))
         NumberEditField(
             value = amountInput,
-            onValueChange = {amountInput = it},
+            onValueChange = { amountInput = it },
             label = R.string.tip_amount,
             leadingIcon = R.drawable.percent,
             keyboardOptions = KeyboardOptions.Default.copy(
@@ -107,47 +109,47 @@ fun TipApp() {
                 .fillMaxWidth(),
 
             )
-        Spacer(modifier=Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(20.dp))
 
 
         NumberEditField(
             value = tipInput,
-            onValueChange = { tipInput = it},
-            label = R.string.bill_amount ,
+            onValueChange = { tipInput = it },
+            label = R.string.bill_amount,
             leadingIcon = R.drawable.money,
             keyboardOptions = KeyboardOptions.Default.copy(
-                keyboardType=KeyboardType.Number,
+                keyboardType = KeyboardType.Number,
                 imeAction = ImeAction.Done
 
             ),
-            )
-        Spacer(modifier=Modifier.height(20.dp))
+        )
+        Spacer(modifier = Modifier.height(20.dp))
 
 
         Row(
-            modifier=Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth()
         ) {
             Text(
-                text="Round up tip?",
-                modifier=Modifier
+                text = "Round up tip?",
+                modifier = Modifier
 
             )
             Switch(
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentWidth(Alignment.End),
-                checked = isRoundInput, onCheckedChange = {isRoundInput =  it})
+                checked = isRoundInput, onCheckedChange = { isRoundInput = it })
         }
-        
+
         Spacer(modifier = Modifier.height(20.dp))
 
         Text(
-            text="Tip Amount: $tip",
+            text = "Tip Amount: $tip",
             style = MaterialTheme.typography.displayMedium,
-            modifier=Modifier.align(Alignment.Start)
+            modifier = Modifier.align(Alignment.Start)
 
 
-            )
+        )
 
 
     }
@@ -165,34 +167,38 @@ fun NumberEditField(
 
 
 ) {
-    
+
     TextField(
-        value=value,
-        onValueChange=onValueChange,
-        label={Text(text= stringResource(id = label))},
-        leadingIcon = { Icon(painter = painterResource(id = leadingIcon), contentDescription = null)},
+        value = value,
+        onValueChange = onValueChange,
+        label = { Text(text = stringResource(id = label)) },
+        leadingIcon = {
+            Icon(
+                painter = painterResource(id = leadingIcon),
+                contentDescription = null
+            )
+        },
         singleLine = true,
-        keyboardOptions=keyboardOptions,
-        modifier=Modifier.fillMaxWidth()
+        keyboardOptions = keyboardOptions,
+        modifier = Modifier.fillMaxWidth()
     )
 }
 
 
-fun calculateTip(amount: Double,  tipPerctange: Double=15.0,  isRound: Boolean=false): String  {
+@VisibleForTesting
+internal fun calculateTip(amount: Double, tipPerctange: Double = 15.0, isRound: Boolean = false): String {
 
-    if(amount <= 0.0 ) {
+    if (amount <= 0.0) {
         return NumberFormat.getCurrencyInstance().format(0.0)
-
     }
 
     var tipAmount = amount * tipPerctange / 100
 
-    if(isRound) {
-        tipAmount =  ceil(tipAmount)
+    if (isRound) {
+        tipAmount = ceil(tipAmount)
     }
 
     return NumberFormat.getCurrencyInstance().format(tipAmount)
-
 
 
 }
