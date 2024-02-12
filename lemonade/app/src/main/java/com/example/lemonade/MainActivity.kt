@@ -157,7 +157,7 @@ fun ImageAndText(
     ) {
 
         Button(
-            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondary),
+            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondaryc),
             onClick = treeImageClickHandler,
             shape= RoundedCornerShape(40.dp),
             modifier = Modifier.size(200.dp)
