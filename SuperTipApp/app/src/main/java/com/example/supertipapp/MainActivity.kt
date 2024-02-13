@@ -26,12 +26,18 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.BottomAppBarDefaults
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -53,12 +59,23 @@ class MainActivity : ComponentActivity() {
         setContent {
             SuperTipAppTheme {
                 // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    TipApp()
+                Scaffold(
+                    topBar = {
+
+                    },
+                    bottomBar = { },
+                    floatingActionButton = { }
+                ) { innerPadding ->
+                    Surface(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(innerPadding),
+                        color = MaterialTheme.colorScheme.background
+                    ) {
+                        TipApp()
+                    }
                 }
+
             }
         }
     }
@@ -129,9 +146,15 @@ fun TipApp() {
         Row(
             modifier = Modifier.fillMaxWidth()
         ) {
+
+
+
+
             Text(
+
                 text = "Round up tip?",
-                modifier = Modifier
+                modifier = Modifier,
+
 
             )
             Switch(
@@ -186,7 +209,11 @@ fun NumberEditField(
 
 
 @VisibleForTesting
-internal fun calculateTip(amount: Double, tipPerctange: Double = 15.0, isRound: Boolean = false): String {
+internal fun calculateTip(
+    amount: Double,
+    tipPerctange: Double = 15.0,
+    isRound: Boolean = false
+): String {
 
     if (amount <= 0.0) {
         return NumberFormat.getCurrencyInstance().format(0.0)
