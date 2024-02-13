@@ -88,7 +88,7 @@ fun ArtSpaceApp() {
 
         Box(modifier=Modifier.padding(20.dp).background(color=Color.LightGray, shape = RoundedCornerShape(5.dp))) {
             Column(
-                modifier = Modifier.height(400.dp).padding(20.dp).shadow(elevation = 12.dp)
+                modifier = Modifier.height(400.dp).padding(20.dp).shadow(elevation = 20.dp)
             ) {
 
                 when (currentImage) {
